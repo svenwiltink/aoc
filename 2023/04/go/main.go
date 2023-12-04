@@ -29,11 +29,9 @@ func part2() {
 func playGame(games []Game, current Game) int {
 	winnerCount := current.WinnerCount()
 
-	for i := 0; i < current.WinnerCount(); i++ {
-		winnerCount += playGame(games, games[current.ID+i])
-	}
-
-	return winnerCount
+	return common.Fold(func(result int, currentGame Game) int {
+		return result + playGame(games, currentGame)
+	}, games[current.ID:current.ID+winnerCount], winnerCount)
 }
 
 func getGames() []Game {

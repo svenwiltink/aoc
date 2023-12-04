@@ -27,16 +27,13 @@ func part2() {
 }
 
 func playGame(games []Game, current Game) int {
-	var sum int
-
 	winnerCount := current.WinnerCount()
-	sum += winnerCount
 
 	for i := 0; i < current.WinnerCount(); i++ {
-		sum += playGame(games, games[current.ID+i])
+		winnerCount += playGame(games, games[current.ID+i])
 	}
 
-	return sum
+	return winnerCount
 }
 
 func getGames() []Game {

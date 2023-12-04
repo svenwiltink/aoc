@@ -1,10 +1,15 @@
 package common
 
-func Sum(numbers []int) int {
-	var sum int
-	for _, num := range numbers {
-		sum += num
+import "slices"
+
+// Intersect gets all item of B that are also in A
+func Intersect[K comparable](A, B []K) []K {
+	var result []K
+	for _, item := range B {
+		if slices.Contains(A, item) {
+			result = append(result, item)
+		}
 	}
 
-	return sum
+	return result
 }

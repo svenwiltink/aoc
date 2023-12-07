@@ -10,6 +10,11 @@ import (
 
 func main() {
 	hands := getHands()
+	part1(hands)
+	part2(hands)
+}
+
+func part1(hands []Hand) {
 	slices.SortFunc(hands, Hand.CompareP1)
 
 	var total int
@@ -18,19 +23,17 @@ func main() {
 	}
 
 	fmt.Println(total)
+}
 
+func part2(hands []Hand) {
 	slices.SortFunc(hands, Hand.CompareP2)
 
-	total = 0
+	var total int
 	for i, hand := range hands {
 		total += hand.Bid * (i + 1)
 	}
 
 	fmt.Println(total)
-}
-
-func part1() {
-
 }
 
 func getHands() []Hand {

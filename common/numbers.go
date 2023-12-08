@@ -18,3 +18,24 @@ func Sum(numbers []int) int {
 
 	return sum
 }
+
+// greatest common divisor (GCD) via Euclidean algorithm
+func Gcd(a, b int) int {
+	for b != 0 {
+		t := b
+		b = a % b
+		a = t
+	}
+	return a
+}
+
+// find Least Common Multiple (LCM) via GCD
+func Lcm(integers ...int) int {
+	result := integers[0] * integers[1] / Gcd(integers[0], integers[1])
+
+	for i := 2; i < len(integers); i++ {
+		result = Lcm(result, integers[i])
+	}
+
+	return result
+}

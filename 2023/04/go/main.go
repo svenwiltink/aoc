@@ -16,14 +16,14 @@ func part1() {
 	games := getGames()
 	fmt.Println(common.Fold(func(value int, current Game) int {
 		return value + current.Score()
-	}, games, 0))
+	}, games))
 }
 
 func part2() {
 	games := getGames()
 	fmt.Println(common.Fold(func(value int, current Game) int {
 		return value + playGame(games, current) + 1
-	}, games, 0))
+	}, games))
 }
 
 func playGame(games []Game, current Game) int {
@@ -31,7 +31,7 @@ func playGame(games []Game, current Game) int {
 
 	return common.Fold(func(result int, currentGame Game) int {
 		return result + playGame(games, currentGame)
-	}, games[current.ID:current.ID+winnerCount], winnerCount)
+	}, games[current.ID:current.ID+winnerCount]) + winnerCount
 }
 
 func getGames() []Game {

@@ -25,3 +25,22 @@ func Pairs[K any](items []K) []Pair[K] {
 
 	return pairs
 }
+
+func Map[K any, V any](mapper func(K) V, values []K) []V {
+	var result []V
+
+	for _, value := range values {
+		result = append(result, mapper(value))
+	}
+
+	return result
+}
+
+func Fold[K any, L any](callable func(previous L, current K) L, items []K) L {
+	var current L
+	for _, item := range items {
+		current = callable(current, item)
+	}
+
+	return current
+}

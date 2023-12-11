@@ -44,3 +44,14 @@ func Fold[K any, L any](callable func(previous L, current K) L, items []K) L {
 
 	return current
 }
+
+func Equal[T comparable](items []T) bool {
+	first := items[0]
+	for _, item := range items {
+		if item != first {
+			return false
+		}
+	}
+
+	return true
+}

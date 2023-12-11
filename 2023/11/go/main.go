@@ -74,21 +74,21 @@ type Universe struct {
 	Multiplier   int
 }
 
-func (u Universe) GalaxyPairs() (pairs []Pair) {
+func (u Universe) GalaxyPairs() (pairs []common.Pair[Galaxy]) {
 	for i, a := range u.Galaxies {
 		for _, b := range u.Galaxies[i:] {
 			if a == b {
 				continue
 			}
 
-			pairs = append(pairs, Pair{a, b})
+			pairs = append(pairs, common.Pair[Galaxy]{a, b})
 		}
 	}
 
 	return pairs
 }
 
-func (u Universe) Distance(p Pair) int {
+func (u Universe) Distance(p common.Pair[Galaxy]) int {
 	a, b := p[0], p[1]
 	minX, minY := int(math.Min(float64(a.X), float64(b.X))), int(math.Min(float64(a.Y), float64(b.Y)))
 	maxX, maxY := int(math.Max(float64(a.X), float64(b.X))), int(math.Max(float64(a.Y), float64(b.Y)))
@@ -114,5 +114,3 @@ type Galaxy struct {
 	X int
 	Y int
 }
-
-type Pair [2]Galaxy

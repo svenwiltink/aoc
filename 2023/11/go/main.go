@@ -16,7 +16,7 @@ func part1() {
 	universe := parseUniverse()
 	universe.Multiplier = 1
 
-	pairs := universe.GalaxyPairs()
+	pairs := common.Pairs(universe.Galaxies)
 	distances := common.Map(universe.Distance, pairs)
 
 	fmt.Println(common.Sum(distances))
@@ -26,7 +26,7 @@ func part2() {
 	universe := parseUniverse()
 	universe.Multiplier = 1_000_000 - 1
 
-	pairs := universe.GalaxyPairs()
+	pairs := common.Pairs(universe.Galaxies)
 	distances := common.Map(universe.Distance, pairs)
 
 	fmt.Println(common.Sum(distances))
@@ -72,20 +72,6 @@ type Universe struct {
 	EmptyRows    []int
 	EmptyColumns []int
 	Multiplier   int
-}
-
-func (u Universe) GalaxyPairs() (pairs []common.Pair[Galaxy]) {
-	for i, a := range u.Galaxies {
-		for _, b := range u.Galaxies[i:] {
-			if a == b {
-				continue
-			}
-
-			pairs = append(pairs, common.Pair[Galaxy]{a, b})
-		}
-	}
-
-	return pairs
 }
 
 func (u Universe) Distance(p common.Pair[Galaxy]) int {

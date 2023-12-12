@@ -10,6 +10,11 @@ func ExtractNumbers(input string) []int {
 	return Map(MustClosure(strconv.Atoi), numbers)
 }
 
+func ExtractNumbersSep(input, sep string) []int {
+	numbers := strings.Split(input, sep)
+	return Map(MustClosure(strconv.Atoi), numbers)
+}
+
 func Sum(numbers []int) int {
 	var sum int
 	for _, num := range numbers {

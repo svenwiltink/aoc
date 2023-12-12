@@ -74,9 +74,7 @@ func getPossibilities(springs string, numbers []int, count int, total string) (s
 			return 1
 		}
 
-		if len(numbers) > 0 || count > 0 {
-			return 0
-		}
+		return 0
 	}
 
 	next := springs[0]
@@ -89,7 +87,7 @@ func getPossibilities(springs string, numbers []int, count int, total string) (s
 		if next == '#' {
 			count++
 
-			// number too big for group already
+			// number too big for group already. Don't need this case but speeds it up significantly
 			if len(numbers) == 0 || count > numbers[0] {
 				continue
 			}

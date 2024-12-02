@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	//part1()
+	part1()
 	part2()
 }
 
@@ -23,7 +23,6 @@ func part1() {
 		distances = append(distances, distance)
 	}
 
-	fmt.Println(distances)
 	fmt.Println(common.Sum(distances))
 }
 

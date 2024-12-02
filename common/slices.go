@@ -46,6 +46,20 @@ func Map[K any, V any](mapper func(K) V, values []K) []V {
 	return result
 }
 
+func Zip[T any](a, b []T) []Pair[T] {
+	shortest := len(a)
+	if len(b) < shortest {
+		shortest = len(b)
+	}
+
+	result := make([]Pair[T], 0, len(a))
+	for i := range shortest {
+		result = append(result, Pair[T]{a[i], b[i]})
+	}
+
+	return result
+}
+
 func Fold[K any, L any](callable func(previous L, current K) L, items []K) L {
 	var current L
 	for _, item := range items {

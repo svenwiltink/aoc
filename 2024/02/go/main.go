@@ -23,18 +23,13 @@ func part2() {
 	fmt.Println(len(safe))
 }
 
+func distance(p common.Pair[int]) int {
+	return p[1] - p[0]
+}
+
 func differences(level []int) []int {
-	var diffs []int
-
-	current, remainder := level[0], level[1:]
-
-	for len(remainder) > 0 {
-		next := remainder[0]
-		diffs = append(diffs, next-current)
-
-		current, remainder = remainder[0], remainder[1:]
-	}
-
+	pairs := common.Zip(level, level[1:])
+	diffs := common.Map(distance, pairs)
 	return diffs
 }
 
@@ -56,6 +51,7 @@ func dampened(level []int) bool {
 
 func isSafe(level []int) bool {
 	diffs := differences(level)
+
 	positives := common.Filter(common.IsPositive[int], diffs)
 	negatives := common.Filter(common.IsNegative[int], diffs)
 

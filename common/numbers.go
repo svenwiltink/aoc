@@ -1,6 +1,7 @@
 package common
 
 import (
+	"golang.org/x/exp/constraints"
 	"strconv"
 	"strings"
 )
@@ -13,6 +14,14 @@ func ExtractNumbers(input string) []int {
 func ExtractNumbersSep(input, sep string) []int {
 	numbers := strings.Split(input, sep)
 	return Map(MustClosure(strconv.Atoi), numbers)
+}
+
+func Abs[T constraints.Integer | constraints.Float](a T) T {
+	if a < 0 {
+		return -a
+	}
+
+	return a
 }
 
 func Sum(numbers []int) int {

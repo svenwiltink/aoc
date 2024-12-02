@@ -14,6 +14,16 @@ func Intersect[K comparable](A, B []K) []K {
 	return result
 }
 
+func Filter[K any](mapper func(K) bool, items []K) []K {
+	var result []K
+	for _, item := range items {
+		if mapper(item) {
+			result = append(result, item)
+		}
+	}
+	return result
+}
+
 // Pairs creats a list distinc pairs from the provided items. The items must have a length of at least 2
 func Pairs[K any](items []K) []Pair[K] {
 	var pairs []Pair[K]

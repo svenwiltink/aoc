@@ -16,6 +16,18 @@ func ExtractNumbersSep(input, sep string) []int {
 	return Map(MustClosure(strconv.Atoi), numbers)
 }
 
+type Number interface {
+	constraints.Integer | constraints.Float
+}
+
+func IsPositive[T Number](num T) bool {
+	return num > 0
+}
+
+func IsNegative[T Number](num T) bool {
+	return num < 0
+}
+
 func Abs[T constraints.Integer | constraints.Float](a T) T {
 	if a < 0 {
 		return -a

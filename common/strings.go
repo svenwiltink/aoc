@@ -27,6 +27,15 @@ func GetLines() []string {
 	return lines
 }
 
+func GetInput() string {
+	data, err := os.ReadFile(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
+
+	return string(data)
+}
+
 func Split(input, sep string) (left, right string) {
 	split := strings.SplitN(input, sep, 2)
 	return split[0], split[1]

@@ -11,7 +11,7 @@ func ExtractNumbers(input string) []int {
 	return Map(MustClosure(strconv.Atoi), numbers)
 }
 
-func ExtractNumbersSep(input, sep string) []int {
+func ExtractNumbersSep(sep, input string) []int {
 	numbers := strings.Split(input, sep)
 	return Map(MustClosure(strconv.Atoi), numbers)
 }

@@ -21,7 +21,7 @@ func main() {
 func part1(rules [][]int, updates [][]int) {
 	var total int
 	for _, update := range updates {
-		if isValid(update, rules) {
+		if isValid(rules, update) {
 			total += update[len(update)/2]
 		}
 	}
@@ -50,11 +50,11 @@ func part2(rules [][]int, updates [][]int) {
 	fmt.Println(total)
 }
 
-func isInvalid(update []int, rules [][]int) bool {
-	return !isValid(update, rules)
+func isInvalid(rules [][]int, update []int) bool {
+	return !isValid(rules, update)
 }
 
-func isValid(update []int, rules [][]int) bool {
+func isValid(rules [][]int, update []int) bool {
 	for _, rule := range rules {
 		left, right := rule[0], rule[1]
 

@@ -17,7 +17,7 @@ func part1() {
 	var total int
 	for _, line := range lines {
 		springs, parts := common.Split(line, " ")
-		numbers := common.ExtractNumbersSep(parts, ",")
+		numbers := common.ExtractNumbersSep(",", parts)
 		total += getPossibilities(springs, numbers, 0, "")
 	}
 	fmt.Println(total)
@@ -35,7 +35,7 @@ func part2() {
 		parts = strings.Repeat(parts+",", 5)
 		parts = parts[:len(parts)-1]
 
-		numbers := common.ExtractNumbersSep(parts, ",")
+		numbers := common.ExtractNumbersSep(",", parts)
 		total += getPossibilities(springs, numbers, 0, "")
 	}
 

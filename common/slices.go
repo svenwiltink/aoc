@@ -46,6 +46,14 @@ func Map[K any, V any](mapper func(K) V, values []K) []V {
 	return result
 }
 
+func Repeat[T any](item T, length int) []T {
+	result := make([]T, length)
+	for i := range length {
+		result[i] = item
+	}
+	return result
+}
+
 func Zip[T any](a, b []T) []Pair[T] {
 	shortest := len(a)
 	if len(b) < shortest {

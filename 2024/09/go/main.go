@@ -20,24 +20,19 @@ func getFS() FS {
 	line := common.GetLines()[0]
 
 	var fs FS
-	var id int
+	var index int
 	var isFile = true
 
 	for _, item := range line {
 		length := common.Must(strconv.Atoi, string(item))
 
+		id := -1
 		if isFile {
-			fs.Add(block{
-				ID:     id,
-				Length: length,
-			})
-			id++
-		} else {
-			fs.Add(block{
-				ID:     -1,
-				Length: length,
-			})
+			id = index
+			index++
 		}
+
+		fs.Add(id, length)
 
 		isFile = !isFile
 	}
@@ -49,8 +44,8 @@ type FS struct {
 	data []int
 }
 
-func (f *FS) Add(file block) {
-	f.data = append(f.data, common.Repeat(file.ID, file.Length)...)
+func (f *FS) Add(id, length int) {
+	f.data = append(f.data, common.Repeat(id, length)...)
 }
 
 func (f *FS) Defrag() {
@@ -158,13 +153,4 @@ func (f *FS) String() string {
 	}
 
 	return result
-}
-
-type block struct {
-	ID     int
-	Length int
-}
-
-func (f block) isFile() bool {
-	return f.ID != -1
 }

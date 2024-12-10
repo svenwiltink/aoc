@@ -65,9 +65,7 @@ func (m Map) traversePath(current coords, reached []coords) ([]coords, int) {
 	var total int
 
 	for _, direction := range directions {
-		//fmt.Println("checking direction for target height", target, direction)
 		targetCoords := current.Add(direction)
-		//fmt.Println("target coords", targetCoords)
 		if m[targetCoords] == target {
 			var sub int
 			reached, sub = m.traversePath(targetCoords, reached)

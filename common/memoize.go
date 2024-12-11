@@ -1,8 +1,6 @@
 package common
 
-type MemoizeType2[A, B comparable, R any] func(func(A, B) R, A, B) R
-
-func Memoize2[A, B comparable, R any](root MemoizeType2[A, B, R], stone A, blinks B) R {
+func Memoize2[A, B comparable, R any](root func(func(A, B) R, A, B) R, a A, b B) R {
 	cache := make(map[struct {
 		p1 A
 		p2 B
@@ -22,5 +20,5 @@ func Memoize2[A, B comparable, R any](root MemoizeType2[A, B, R], stone A, blink
 		cache[cacheKey] = result
 		return result
 	}
-	return inner(stone, blinks)
+	return inner(a, b)
 }

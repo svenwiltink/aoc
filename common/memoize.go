@@ -1,24 +1,23 @@
 package common
 
-func Memoize2[A, B comparable, R any](root func(func(A, B) R, A, B) R, a A, b B) R {
-	cache := make(map[struct {
-		p1 A
-		p2 B
-	}]R)
+func Memoize2[A, B comparable, O any, F func(A, B) O](fn func(F, A, B) O) func(A, B) O {
+	type key struct {
+		input1 A
+		input2 B
+	}
 
-	var inner func(A, B) R
-	inner = func(s A, b B) R {
-		cacheKey := struct {
-			p1 A
-			p2 B
-		}{s, b}
-		if item, exists := cache[cacheKey]; exists {
-			return item
+	cache := make(map[key]O)
+
+	var f F
+	f = func(input1 A, input2 B) O {
+		k := key{input1, input2}
+		if result, found := cache[k]; found {
+			return result
 		}
 
-		result := root(inner, s, b)
-		cache[cacheKey] = result
+		result := fn(f, input1, input2)
+		cache[k] = result
 		return result
 	}
-	return inner(a, b)
+	return f
 }

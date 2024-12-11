@@ -19,7 +19,10 @@ func main() {
 
 type cachekey [2]int
 
-func splitStone(stone int, blinks int, cache map[cachekey]int) int {
+func splitStone(stone int, blinks int, cache map[cachekey]int) (result int) {
+	defer func() {
+		cache[cachekey{stone, blinks}] = result
+	}()
 	if item, exists := cache[cachekey{stone, blinks}]; exists {
 		return item
 	}
@@ -29,9 +32,7 @@ func splitStone(stone int, blinks int, cache map[cachekey]int) int {
 	}
 
 	if stone == 0 {
-		result := splitStone(1, blinks-1, cache)
-		cache[cachekey{stone, blinks}] = result
-		return result
+		return splitStone(1, blinks-1, cache)
 	}
 
 	digits := int(math.Floor(math.Log10(float64(stone)))) + 1
@@ -40,12 +41,8 @@ func splitStone(stone int, blinks int, cache map[cachekey]int) int {
 	if isEven {
 		left := stone / int(math.Pow(10, float64(digits/2)))
 		right := stone % int(math.Pow(10, float64(digits/2)))
-		result := splitStone(left, blinks-1, cache) + splitStone(right, blinks-1, cache)
-		cache[cachekey{stone, blinks}] = result
-		return result
+		return splitStone(left, blinks-1, cache) + splitStone(right, blinks-1, cache)
 	}
 
-	result := splitStone(stone*2024, blinks-1, cache)
-	cache[cachekey{stone, blinks}] = result
-	return result
+	return splitStone(stone*2024, blinks-1, cache)
 }

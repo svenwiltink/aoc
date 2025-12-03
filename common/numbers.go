@@ -45,6 +45,30 @@ func Sum(numbers []int) int {
 	return sum
 }
 
+func Max(numbers []int) (index int, value int) {
+	value = numbers[0]
+	for i, n := range numbers {
+		if n > value {
+			value = n
+			index = i
+		}
+	}
+
+	return index, value
+}
+
+func Min(numbers []int) (index int, value int) {
+	value = numbers[0]
+	for i, n := range numbers {
+		if n < value {
+			value = n
+			index = i
+		}
+	}
+
+	return index, value
+}
+
 // greatest common divisor (GCD) via Euclidean algorithm
 func Gcd(a, b int) int {
 	for b != 0 {

@@ -40,35 +40,26 @@ func main() {
 	}
 
 	fmt.Println(p1)
-	for {
-		var changed bool
-		for i, iItem := range fresh {
-			for j, jItem := range fresh {
-				if i == j {
-					continue
-				}
 
-				if iItem.count() == 0 && jItem.count() == 0 {
-					continue
-				}
+	slices.SortFunc(fresh, func(a, b FreshRange) int {
+		return a[0] - b[0]
+	})
 
-				merged := iItem.merge(jItem)
-				// o my god, we merged!
-				if len(merged) == 1 {
-					fresh[i] = merged[0]
-					fresh[j] = FreshRange{} // this sucks
-					changed = true
-					break
-				}
-			}
+	var result int
+	var prev FreshRange
+	for _, f := range fresh {
+		if f[1] <= prev[1] {
+			continue
+		}
+		if f[0] <= prev[1] {
+			f[0] = prev[1] + 1
 		}
 
-		if !changed {
-			break
-		}
+		result += f.count()
+		prev = f
 	}
 
-	fmt.Println(common.Sum(common.Map(FreshRange.count, fresh)))
+	fmt.Println(result)
 }
 
 type FreshRange [2]int
@@ -82,39 +73,4 @@ func (f FreshRange) count() int {
 		return 0
 	}
 	return f[1] - f[0] + 1
-}
-
-func (f FreshRange) merge(o FreshRange) []FreshRange {
-	// o end earlier than f, no overlap
-	if o[1] < f[0] {
-		return []FreshRange{f, o}
-	}
-
-	// o starts after f, no overlap
-	if o[0] > f[1] {
-		return []FreshRange{f, o}
-	}
-
-	// o is entirely inside f, fully contained
-	if o[0] >= f[0] && o[1] <= f[1] {
-		return []FreshRange{f}
-	}
-
-	// f is entirely inside o, fully contained but reversed
-	if f[0] >= o[0] && f[1] <= o[1] {
-		return []FreshRange{o}
-	}
-
-	// we are (partially) overlapping, check lower and higher end
-	// lower side, cut to start of f
-	if o[0] < f[0] {
-		return []FreshRange{{o[0], f[1]}}
-	}
-
-	// high side, take lower f and higher o
-	if o[1] > f[1] {
-		return []FreshRange{{f[0], o[1]}}
-	}
-
-	panic("did I mess up?")
 }

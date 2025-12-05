@@ -69,8 +69,5 @@ func (f FreshRange) isFresh(i int) bool {
 }
 
 func (f FreshRange) count() int {
-	if f[0] == 0 && f[1] == 0 {
-		return 0
-	}
 	return f[1] - f[0] + 1
 }

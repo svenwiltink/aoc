@@ -16,9 +16,9 @@ func part1() {
 	lines := common.GetLines()
 	panel := common.Map(func(a string) []rune { return []rune(a) }, lines)
 
-	common.Transpose(panel)
+	common.TransposeInPlace(panel)
 	cycle(panel)
-	common.Transpose(panel)
+	common.TransposeInPlace(panel)
 
 	score := 0
 	max := len(panel)
@@ -63,21 +63,21 @@ func score(panel [][]rune) int {
 
 func rotate(panel [][]rune) {
 
-	common.Transpose(panel)
+	common.TransposeInPlace(panel)
 
 	cycle(panel)
 
-	common.Transpose(panel)
+	common.TransposeInPlace(panel)
 
 	cycle(panel)
 
-	common.Transpose(panel)
+	common.TransposeInPlace(panel)
 	common.FlipVert(panel)
 
 	cycle(panel)
 
 	common.FlipVert(panel)
-	common.Transpose(panel)
+	common.TransposeInPlace(panel)
 	common.FlipVert(panel)
 
 	cycle(panel)

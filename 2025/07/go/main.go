@@ -8,24 +8,24 @@ import (
 
 func main() {
 	p := getPuzzle()
-	p.trace(p.start)
+	p2 := p.trace(p.start)
 	fmt.Println(len(p.hit))
+	fmt.Println(p2)
 }
 
 type puzzle struct {
 	start common.Coords
 	input map[common.Coords]rune
 
-	hit map[common.Coords]struct{}
+	hit map[common.Coords]int
 }
 
-func (p *puzzle) trace(c common.Coords) {
+func (p *puzzle) trace(c common.Coords) (result int) {
 	for {
-		fmt.Println("tracing", c)
 		c = c.Add(common.S)
 		char, exists := p.input[c]
 		if !exists {
-			return
+			return 1
 		}
 
 		if char == '.' {
@@ -36,10 +36,14 @@ func (p *puzzle) trace(c common.Coords) {
 			panic("we messed up")
 		}
 
-		p.hit[c] = struct{}{}
-		p.trace(c.Add(common.W))
-		p.trace(c.Add(common.E))
-		return
+		if hits, exists := p.hit[c]; exists {
+			return hits
+		}
+
+		left := p.trace(c.Add(common.W))
+		right := p.trace(c.Add(common.E))
+		p.hit[c] = left + right
+		return left + right
 	}
 }
 
@@ -58,6 +62,6 @@ func getPuzzle() puzzle {
 	return puzzle{
 		start: common.Coords{start, 0},
 		input: input,
-		hit:   map[common.Coords]struct{}{},
+		hit:   map[common.Coords]int{},
 	}
 }

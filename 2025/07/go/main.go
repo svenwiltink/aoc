@@ -11,6 +11,11 @@ func main() {
 	p2 := p.trace(p.start)
 	fmt.Println(len(p.hit))
 	fmt.Println(p2)
+
+	// 'bonus' points
+
+	memoize := common.Memoize(common.Curry2(puzzle.alternativeP2, p))
+	fmt.Println(memoize(p.start))
 }
 
 type puzzle struct {
@@ -43,6 +48,28 @@ func (p *puzzle) trace(c common.Coords) (result int) {
 		left := p.trace(c.Add(common.W))
 		right := p.trace(c.Add(common.E))
 		p.hit[c] = left + right
+		return left + right
+	}
+}
+
+func (p puzzle) alternativeP2(self func(common.Coords) int, c common.Coords) (result int) {
+	for {
+		c = c.Add(common.S)
+		char, exists := p.input[c]
+		if !exists {
+			return 1
+		}
+
+		if char == '.' {
+			continue
+		}
+
+		if char != '^' {
+			panic("we messed up")
+		}
+
+		left := self(c.Add(common.W))
+		right := self(c.Add(common.E))
 		return left + right
 	}
 }

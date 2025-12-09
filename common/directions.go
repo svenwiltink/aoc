@@ -10,6 +10,9 @@ func (c Coords) Add(o Coords) Coords {
 	return Coords{c[0] + o[0], c[1] + o[1]}
 }
 
+func (c Coords) Sub(o Coords) Coords {
+	return Coords{o[0] - c[0], o[1] - c[1]}
+}
 func (c Coords) IsDiagonal() bool {
 	return c[0] != 0 && c[1] != 0
 }
